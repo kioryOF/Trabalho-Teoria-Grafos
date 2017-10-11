@@ -35,17 +35,25 @@ public class Graph {
     }
 
     public void addEdge(Edge edge) {
+        if (edge.getDirected() == null) {
+            if (this.edgedefault == "directed") {
+                edge.setDirected(true);
+            }
+        }
+        if (this.edgedefault == "undirected") {
+            edge.setDirected(false);
+        }
         this.edges.add(edge);
     }
 
     public Node pegarNodeDaLista(String nome) {
         int i;
         for (i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i).getId() == nome){
+            if (nodes.get(i).getId() == nome) {
                 return nodes.get(i);
             }
         }
-        
+
         return null;
     }
 

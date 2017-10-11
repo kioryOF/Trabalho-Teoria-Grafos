@@ -20,7 +20,7 @@ public class Edge {
         this.id = id;
         this.source = source;
         this.target = target;
-        this.directed = false;
+      
     }
 
     public Edge(String id, Node source, Node target, Boolean directed) {
