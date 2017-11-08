@@ -7,7 +7,7 @@ import modelos.Node;
 public class AdicionaEdge extends javax.swing.JFrame {
 
     private String[] arrayDeNo;
-    private String[] orientacoes = {"Nenhuma", "Orientada", "Não Orientada"};
+    private String[] orientacoes = {"Orientada", "Não Orientada"};
 
     public AdicionaEdge() {
         arrayDeNo = atualizaArray();
@@ -43,6 +43,11 @@ public class AdicionaEdge extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jComboBoxInicio.setModel(new javax.swing.DefaultComboBoxModel<>(arrayDeNo));
+        jComboBoxInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxInicioActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Escolha o nó de Inicio:");
 
@@ -67,6 +72,11 @@ public class AdicionaEdge extends javax.swing.JFrame {
         jLabel4.setText("Qual a Orientação da Aresta");
 
         jComboBoxOrientacao.setModel(new javax.swing.DefaultComboBoxModel<>(orientacoes));
+        jComboBoxOrientacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxOrientacaoActionPerformed(evt);
+            }
+        });
 
         jComboBoxFim.setModel(new javax.swing.DefaultComboBoxModel<>(arrayDeNo));
 
@@ -143,26 +153,40 @@ public class AdicionaEdge extends javax.swing.JFrame {
 
         Edge aresta;
 
-        int orientacao = jComboBoxOrientacao.getSelectedIndex();
+        Object objeto = jComboBoxOrientacao.getSelectedItem();
+        String orientacaoString = (String) objeto;
+        int orientacao;
+        if (orientacaoString == "Orientada") {
+            orientacao = 1;
+        } else {
+            orientacao = 2;
+        }
+        // int orientacao = jComboBoxOrientacao.getSelectedIndex();
         Boolean orientacaoBool;
 
         if (orientacao == 1) { //Orientado
             orientacaoBool = true;
             aresta = new Edge(nome, origem, alvo, orientacaoBool);
             TelaPrincipal.getGrafo().addEdge(aresta);
+            System.out.println(TelaPrincipal.getGrafo().getEdges().get(0).getId());
 
         } else if (orientacao == 2) { //Nao Orientado
             orientacaoBool = false;
             aresta = new Edge(nome, origem, alvo, orientacaoBool);
             TelaPrincipal.getGrafo().addEdge(aresta);
-
-        } else if (orientacao == 0) { //Nenhum
-            aresta = new Edge(nome, origem, alvo);
-            TelaPrincipal.getGrafo().addEdge(aresta);
+            System.out.println(TelaPrincipal.getGrafo().getEdges().get(0).getId());
         }
-        
+
         this.dispose();
     }//GEN-LAST:event_jButtonAdicionarArestaActionPerformed
+
+    private void jComboBoxOrientacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrientacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxOrientacaoActionPerformed
+
+    private void jComboBoxInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxInicioActionPerformed
 
     public static void main(String args[]) {
 
