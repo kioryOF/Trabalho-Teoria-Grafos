@@ -379,4 +379,210 @@ public class Graph {
         return false;
     }
 
-	
+	public ArrayList<Node> getCaminho(Node noAtual, Node noProcurado) {
+
+        int i;
+        ArrayList<Node> listaSaidas = new ArrayList<>();
+        for (i = 0; i < this.edges.size(); i++) {
+            if (noAtual.getId().equals(this.edges.get(i).getSource().getId())) {
+                listaSaidas.add(this.edges.get(i).getTarget());
+                if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
+                    ArrayList listaCaminho = new ArrayList();
+                    listaCaminho.add(noProcurado);
+                    listaCaminho.add(0, noAtual);
+                    return listaCaminho;
+                }
+            }
+        }
+        if (listaSaidas.size() > 0) {
+            int j;
+
+            for (j = 0; j < listaSaidas.size(); j++) {
+                ArrayList volta = this.getCaminho(listaSaidas.get(j), noProcurado);
+                if (volta != null) {
+
+                    volta.add(0, noAtual);
+
+                    return volta;
+                }
+            }
+        }
+
+        return null;
+
+    }
+
+    public ArrayList<Node> getCadeia(Node noInicial, Node noProcurado) {
+
+        int i;
+        ArrayList<Node> listaSaidas = new ArrayList<>();
+        ArrayList<Edge> listaAux = new ArrayList<>();
+
+        for (i = 0; i < this.edges.size(); i++) {
+            if (this.getEdges().get(i).getDirected()) {
+                if (noInicial.getId().equals(this.edges.get(i).getSource().getId())) {
+                    listaSaidas.add(this.edges.get(i).getTarget());
+                    listaAux.add(this.edges.get(i));
+                    if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(listaCaminho.size(), noInicial);
+                        return listaCaminho;
+                    }
+                }
+            } else {
+                if (noInicial.getId().equals(this.edges.get(i).getSource().getId())) {
+                    listaSaidas.add(this.edges.get(i).getTarget());
+                    listaAux.add(this.edges.get(i));
+                    if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(0, noInicial);
+                        return listaCaminho;
+                    }
+                } else if (noInicial.getId().equals(this.edges.get(i).getTarget().getId())) {
+                    listaSaidas.add(this.edges.get(i).getSource());
+                    listaAux.add(this.edges.get(i));
+                    if (this.edges.get(i).getSource().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(0, noInicial);
+                        return listaCaminho;
+                    }
+                }
+            }
+        }
+
+        if (listaSaidas.size()
+                > 0) {
+            int j;
+
+            for (j = 0; j < listaSaidas.size(); j++) {
+                ArrayList<Edge> listaPassagem = new ArrayList<>();
+                listaPassagem.add(listaAux.get(j));
+                ArrayList volta = this.getCadeiaAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem);
+                if (volta != null) {
+                    volta.add(0, noInicial);
+                    return volta;
+                }
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Node> getCadeiaAuxiliar(Node noAtual, Node noProcurado, ArrayList<Edge> listaPassagem) {
+
+        int i, n;
+
+        ArrayList<Node> listaSaidas = new ArrayList<>();
+        ArrayList<Edge> listaAuxPassagem = new ArrayList<>();
+        ArrayList<Edge> listaAuxEdge = new ArrayList<>();
+        listaAuxEdge = this.edges;
+
+        for (n = 0; n < this.edges.size(); n++) {
+            if (listaPassagem.contains(listaAuxEdge.get(n))) {
+                listaAuxEdge.remove(listaAuxEdge.get(n));
+            }
+        }
+
+        for (i = 0; i < listaAuxEdge.size(); i++) {
+            if (this.getEdges().get(i).getDirected()) {
+                if (noAtual.getId().equals(listaAuxEdge.get(i).getSource().getId())) {
+                    listaSaidas.add(listaAuxEdge.get(i).getTarget());
+                    listaAuxPassagem.add(listaAuxEdge.get(i));
+                    if (listaAuxEdge.get(i).getTarget().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(listaCaminho.size(), noAtual);
+                        return listaCaminho;
+                    }
+                }
+            } else {
+                if (noAtual.getId().equals(listaAuxEdge.get(i).getSource().getId())) {
+                    listaSaidas.add(listaAuxEdge.get(i).getTarget());
+                    listaAuxPassagem.add(listaAuxEdge.get(i));
+                    if (listaAuxEdge.get(i).getTarget().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(0, noAtual);
+                        return listaCaminho;
+                    }
+                } else if (noAtual.getId().equals(listaAuxEdge.get(i).getTarget().getId())) {
+                    listaSaidas.add(listaAuxEdge.get(i).getSource());
+                    listaAuxPassagem.add(listaAuxEdge.get(i));
+                    if (listaAuxEdge.get(i).getSource().getId().equals(noProcurado.getId())) {
+                        ArrayList listaCaminho = new ArrayList();
+                        listaCaminho.add(noProcurado);
+                        listaCaminho.add(0, noAtual);
+                        return listaCaminho;
+                    }
+                }
+            }
+
+        }
+
+        if (listaSaidas.size()
+                > 0) {
+            int j;
+
+            for (j = 0; j < listaSaidas.size(); j++) {
+                listaPassagem.add(listaAuxPassagem.get(j));
+                ArrayList volta = this.getCadeiaAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem);
+                if (volta != null) {
+                    volta.add(0, noAtual);
+                    return volta;
+                }
+            }
+        }
+
+        return null;
+    }
+    public Boolean isBiPartido() {
+        int i;
+        int separacao[] = new int[this.nodes.size()];
+
+        for (i = 0; i < separacao.length; i++) {
+            separacao[i] = -1;
+        }
+        separacao[0] = 0;
+
+        for (i = 0; i < separacao.length; i++) {
+            if (!biPartidoAuxiliar(i, separacao)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private Boolean biPartidoAuxiliar(int indice, int vetor[]) {
+
+        ArrayList<Node> adjacentes = this.getNosAdjacentes(this.nodes.get(indice));
+
+        int i;
+        for (i = 0; i < adjacentes.size(); i++) {
+            int indiceNo = getIndiceNode(adjacentes.get(i));
+            if (vetor[indiceNo] == -1) {
+                if (vetor[indice] == 0) {
+                    vetor[indiceNo] = 1;
+                } else {
+                    vetor[indiceNo] = 0;
+                }
+            } else if (vetor[indiceNo] == vetor[indice]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int getIndiceNode(Node no) {
+        int i;
+        for (i = 0; i < this.nodes.size(); i++) {
+            if (no.getId().equals(this.nodes.get(i).getId())) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
