@@ -2,10 +2,13 @@ package telas;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import modelos.Graph;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import modelos.Edge;
+import modelos.Node;
 import xml.ControladorXML;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -13,8 +16,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     static private Graph grafo;
     private CriarNovoGraph cnGrafo;
     private AdicionaNode addNode;
+    private RemoveNode removeNode;
+    private RemoveEdge removeEdge;
     private AdicionaEdge addEdge;
     private JFileChooser fileChooser;
+    private DadosNode dadosNode;
 
     public TelaPrincipal() {
         initComponents();
@@ -36,6 +42,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaGrafo = new javax.swing.JTextArea();
         jButtonVisualizar = new javax.swing.JButton();
+        removeNo = new javax.swing.JToggleButton();
+        removeAresta = new javax.swing.JToggleButton();
         jPanelCarregarGrafo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         selecionaGrafo = new javax.swing.JButton();
@@ -47,6 +55,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        areaRepresentacao = new javax.swing.JTextArea();
+        matrizAdjacencia = new javax.swing.JButton();
+        listaAdjacencia = new javax.swing.JButton();
+        matrizIncidencia = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -100,17 +117,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        removeNo.setText("Remover Nó");
+        removeNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeNoActionPerformed(evt);
+            }
+        });
+
+        removeAresta.setText("Remover Aresta");
+        removeAresta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeArestaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelVerticesLayout = new javax.swing.GroupLayout(jPanelVertices);
         jPanelVertices.setLayout(jPanelVerticesLayout);
         jPanelVerticesLayout.setHorizontalGroup(
             jPanelVerticesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanelVerticesLayout.createSequentialGroup()
                 .addGroup(jPanelVerticesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCriaNovoGraph, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(jButtonCriaNovoGraph, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                     .addComponent(jButtonAdicionaNode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonAdicionaEdge, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonSalvarGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonSalvarGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(removeNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(removeAresta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -122,9 +155,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonAdicionaNode)
                 .addGap(25, 25, 25)
                 .addComponent(jButtonAdicionaEdge)
-                .addGap(100, 100, 100)
+                .addGap(18, 18, 18)
+                .addComponent(removeNo)
+                .addGap(18, 18, 18)
+                .addComponent(removeAresta)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonVisualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(jButtonSalvarGraph))
             .addComponent(jScrollPane2)
         );
@@ -241,6 +278,94 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Carregar Grafo", jPanelCarregarGrafo);
 
+        areaRepresentacao.setEditable(false);
+        areaRepresentacao.setColumns(20);
+        areaRepresentacao.setRows(5);
+        jScrollPane3.setViewportView(areaRepresentacao);
+
+        matrizAdjacencia.setText("Matriz de Adjacências");
+        matrizAdjacencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matrizAdjacenciaActionPerformed(evt);
+            }
+        });
+
+        listaAdjacencia.setText(" Listas de Adjacências");
+        listaAdjacencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaAdjacenciaActionPerformed(evt);
+            }
+        });
+
+        matrizIncidencia.setText(" Matriz de Incidências");
+        matrizIncidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matrizIncidenciaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Caracteristica de Nós");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Ordem Grafo");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Tipo Grafo");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(matrizAdjacencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listaAdjacencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(matrizIncidencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(74, 74, 74))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(matrizAdjacencia)
+                .addGap(18, 18, 18)
+                .addComponent(listaAdjacencia)
+                .addGap(18, 18, 18)
+                .addComponent(matrizIncidencia)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(60, 60, 60))
+        );
+
+        jTabbedPane.addTab("Representação Grafo", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -249,7 +374,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane)
+            .addComponent(jTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -265,6 +390,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ControladorXML xml = new ControladorXML();
             try {
                 grafo = xml.carregarGrafo(fileChooser.getSelectedFile().getPath());
+                System.out.println(fileChooser.getSelectedFile().getPath());
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo .xml");
 
@@ -284,10 +410,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButtonAdicionaEdgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionaEdgeActionPerformed
         if (this.grafo == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
-            cnGrafo = new CriarNovoGraph();
-            cnGrafo.setVisible(true);
+            this.jButtonCriaNovoGraphActionPerformed(evt);
         } else if (this.grafo.getNodes().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes de criar uma Aresta");
+            JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
+            this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
             addEdge = new AdicionaEdge();
             addEdge.setVisible(true);
@@ -297,8 +423,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButtonSalvarGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarGraphActionPerformed
         if (this.grafo == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
-            cnGrafo = new CriarNovoGraph();
-            cnGrafo.setVisible(true);
+            this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
 
             ControladorXML xml = new ControladorXML();
@@ -322,8 +447,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButtonAdicionaNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionaNodeActionPerformed
         if (this.grafo == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
-            cnGrafo = new CriarNovoGraph();
-            cnGrafo.setVisible(true);
+            this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
             addNode = new AdicionaNode();
             addNode.setVisible(true);
@@ -335,13 +459,199 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         if (this.grafo == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
-            cnGrafo = new CriarNovoGraph();
-            cnGrafo.setVisible(true);
+            this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
             ControladorXML xml = new ControladorXML();
             jTextAreaGrafo.setText(xml.mostraGrafo(grafo));
         }
     }//GEN-LAST:event_jButtonVisualizarActionPerformed
+
+    private void removeNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeNoActionPerformed
+        if (this.grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        }
+        if (grafo.getNodes().size() == 0) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um no antes");
+            this.jButtonAdicionaNodeActionPerformed(evt);
+        } else {
+            removeNode = new RemoveNode();
+            removeNode.setVisible(true);
+        }
+    }//GEN-LAST:event_removeNoActionPerformed
+
+    private void removeArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeArestaActionPerformed
+        if (this.grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else if (grafo.getEdges().size() == 0) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
+            this.jButtonAdicionaEdgeActionPerformed(evt);
+        } else {
+            removeEdge = new RemoveEdge();
+            removeEdge.setVisible(true);
+        }
+    }//GEN-LAST:event_removeArestaActionPerformed
+
+    private void matrizIncidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizIncidenciaActionPerformed
+        if (grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else {
+            if (grafo.getEdges().size() > 0) {
+                int linha = grafo.getNodes().size();
+                int coluna = grafo.getEdges().size();
+                int i, j;
+                String str = "\t";
+                for (i = 0; i < coluna; i++) {
+                    str += grafo.getEdges().get(i).getId() + "\t";
+                }
+                str += "\n";
+                for (i = 0; i < linha; i++) {
+                    str += grafo.getNodes().get(i).getId() + " :\t";
+                    for (j = 0; j < coluna; j++) {
+
+                        str += grafo.getMatrizIncidencia()[i][j] + "\t";
+
+                    }
+                    str += "\n";
+
+                }
+                str += "Legenda:";
+                str += "\n";
+                str += "1: Saida";
+                str += "\n";
+                str += "-1: Chegada";
+                str += "\n";
+                str += "2: Saida e chegada";
+                areaRepresentacao.setText(str);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
+                this.jButtonAdicionaEdgeActionPerformed(evt);
+            }
+        }
+    }//GEN-LAST:event_matrizIncidenciaActionPerformed
+
+    private void matrizAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdjacenciaActionPerformed
+        if (grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else {
+            if (grafo.getEdges().size() > 0) {
+                int n = grafo.getNodes().size();
+                //int m = grafo.getEdges().size();
+                int i, j;
+                String str = "\t";
+                for (i = 0; i < n; i++) {
+                    str += grafo.getNodes().get(i).getId() + "\t";
+                }
+                str += "\n";
+                for (i = 0; i < n; i++) {
+                    str += grafo.getNodes().get(i).getId() + " :\t";
+                    for (j = 0; j < n; j++) {
+
+                        str += grafo.getMatrizAdjacencia()[i][j] + "\t";
+
+                    }
+                    str += "\n";
+                }
+                areaRepresentacao.setText(str);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
+                this.jButtonAdicionaEdgeActionPerformed(evt);
+            }
+        }
+    }//GEN-LAST:event_matrizAdjacenciaActionPerformed
+
+    private void listaAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAdjacenciaActionPerformed
+
+        if (grafo == null) {
+
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else {
+            if (grafo.getEdges().size() > 0) {
+                int i, j;
+
+                String str = "";
+                for (i = 0; i < grafo.getListaDeAdjacencia().size(); i++) {
+                    str += grafo.getNodes().get(i).getId() + " :\t";
+                    ArrayList<Node> listaNo = grafo.getListaDeAdjacencia().get(i);
+
+                    System.out.println(listaNo.size());
+                    for (j = 0; j < listaNo.size(); j++) {
+
+                        str += listaNo.get(j).getId() + "  ";
+                    }
+                    str += "\n";
+
+                }
+                System.out.println(str);
+                areaRepresentacao.setText(str);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
+                this.jButtonAdicionaEdgeActionPerformed(evt);
+            }
+        }
+    }//GEN-LAST:event_listaAdjacenciaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else if (this.grafo.getNodes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
+            this.jButtonAdicionaNodeActionPerformed(evt);
+        } else {
+            dadosNode = new DadosNode();
+            dadosNode.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (this.grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else if (this.grafo.getNodes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
+            this.jButtonAdicionaNodeActionPerformed(evt);
+        } else {
+            String str = "Ordem do grafo é : " + grafo.getOrdem();
+            areaRepresentacao.setText(str);
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String str = "";
+        if (this.grafo == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else if (this.grafo.getNodes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
+            this.jButtonAdicionaNodeActionPerformed(evt);
+        } else {
+
+            if (grafo.isMultigrafo()) {
+                str += "Multigrafo" + "\n";
+            }
+            if (grafo.isRegular()) {
+                str += "Regular" + "\n";
+            }
+            if (grafo.isCompleto()) {
+                str += "Completo";
+            }
+            if (grafo.isBiPartido()) {
+                str += "Bipartido";
+            }
+            if (str == "") {
+                str = "Não tem tipo";
+            }
+
+        }
+        areaRepresentacao.setText(str);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
 
@@ -386,9 +696,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea areaRepresentacao;
     private javax.swing.JTextField campoIdGrafo;
     private javax.swing.JTextField campoQntArestas;
     private javax.swing.JTextField campoQntVertices;
+    private javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonAdicionaEdge;
     private javax.swing.JButton jButtonAdicionaNode;
     private javax.swing.JButton jButtonCriaNovoGraph;
@@ -398,15 +712,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCarregarGrafo;
     private javax.swing.JPanel jPanelCriarGrafo;
     private javax.swing.JPanel jPanelVertices;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTextArea jTextAreaGrafo;
+    private javax.swing.JButton listaAdjacencia;
+    private javax.swing.JButton matrizAdjacencia;
+    private javax.swing.JButton matrizIncidencia;
     private javax.swing.JTextArea painelCarregaGrafo;
+    private javax.swing.JToggleButton removeAresta;
+    private javax.swing.JToggleButton removeNo;
     private javax.swing.JButton selecionaGrafo;
     // End of variables declaration//GEN-END:variables
 }
