@@ -75,7 +75,7 @@ public class Graph {
     }
 
     public ArrayList<Node> getNodes() {
-        return nodes;
+        return (ArrayList<Node>) nodes.clone();
     }
 
     public void setNodes(ArrayList<Node> nodes) {
@@ -83,7 +83,7 @@ public class Graph {
     }
 
     public ArrayList<Edge> getEdges() {
-        return edges;
+        return (ArrayList<Edge>) edges.clone();
     }
 
     public void setEdges(ArrayList<Edge> edges) {
@@ -280,7 +280,6 @@ public class Graph {
         return matrizAdjacencia;
     }
 
-   
     public ArrayList<ArrayList<Node>> getListaDeAdjacencia() {
         int i, j;
         ArrayList<ArrayList<Node>> lista = new ArrayList<>();
@@ -379,7 +378,7 @@ public class Graph {
         return false;
     }
 
-	public ArrayList<Node> getCaminho(Node noAtual, Node noProcurado) {
+    public ArrayList<Node> getCadeia(Node noAtual, Node noProcurado) {
 
         int i;
         ArrayList<Node> listaSaidas = new ArrayList<>();
@@ -387,10 +386,10 @@ public class Graph {
             if (noAtual.getId().equals(this.edges.get(i).getSource().getId())) {
                 listaSaidas.add(this.edges.get(i).getTarget());
                 if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
-                    ArrayList listaCaminho = new ArrayList();
-                    listaCaminho.add(noProcurado);
-                    listaCaminho.add(0, noAtual);
-                    return listaCaminho;
+                    ArrayList listaCadeia = new ArrayList();
+                    listaCadeia.add(noProcurado);
+                    listaCadeia.add(0, noAtual);
+                    return listaCadeia;
                 }
             }
         }
@@ -398,7 +397,7 @@ public class Graph {
             int j;
 
             for (j = 0; j < listaSaidas.size(); j++) {
-                ArrayList volta = this.getCaminho(listaSaidas.get(j), noProcurado);
+                ArrayList volta = this.getCadeia(listaSaidas.get(j), noProcurado);
                 if (volta != null) {
 
                     volta.add(0, noAtual);
@@ -412,7 +411,7 @@ public class Graph {
 
     }
 
-    public ArrayList<Node> getCadeia(Node noInicial, Node noProcurado) {
+    public ArrayList<Node> getCaminho(Node noInicial, Node noProcurado) {
 
         int i;
         ArrayList<Node> listaSaidas = new ArrayList<>();
@@ -424,10 +423,10 @@ public class Graph {
                     listaSaidas.add(this.edges.get(i).getTarget());
                     listaAux.add(this.edges.get(i));
                     if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(listaCaminho.size(), noInicial);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(listaCadeia.size(), noInicial);
+                        return listaCadeia;
                     }
                 }
             } else {
@@ -435,19 +434,19 @@ public class Graph {
                     listaSaidas.add(this.edges.get(i).getTarget());
                     listaAux.add(this.edges.get(i));
                     if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(0, noInicial);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(0, noInicial);
+                        return listaCadeia;
                     }
                 } else if (noInicial.getId().equals(this.edges.get(i).getTarget().getId())) {
                     listaSaidas.add(this.edges.get(i).getSource());
                     listaAux.add(this.edges.get(i));
                     if (this.edges.get(i).getSource().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(0, noInicial);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(0, noInicial);
+                        return listaCadeia;
                     }
                 }
             }
@@ -460,7 +459,8 @@ public class Graph {
             for (j = 0; j < listaSaidas.size(); j++) {
                 ArrayList<Edge> listaPassagem = new ArrayList<>();
                 listaPassagem.add(listaAux.get(j));
-                ArrayList volta = this.getCadeiaAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem);
+                ArrayList<Edge> listaAuxEdge = new ArrayList<>(this.edges);
+                ArrayList volta = this.getCaminhoAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem, listaAuxEdge);
                 if (volta != null) {
                     volta.add(0, noInicial);
                     return volta;
@@ -470,31 +470,28 @@ public class Graph {
         return null;
     }
 
-    private ArrayList<Node> getCadeiaAuxiliar(Node noAtual, Node noProcurado, ArrayList<Edge> listaPassagem) {
+    private ArrayList<Node> getCaminhoAuxiliar(Node noAtual, Node noProcurado, ArrayList<Edge> listaPassagem, ArrayList<Edge> listaAuxEdge) {
 
         int i, n;
 
         ArrayList<Node> listaSaidas = new ArrayList<>();
         ArrayList<Edge> listaAuxPassagem = new ArrayList<>();
-        ArrayList<Edge> listaAuxEdge = new ArrayList<>();
-        listaAuxEdge = this.edges;
 
-        for (n = 0; n < this.edges.size(); n++) {
+        for (n = 0; n < listaAuxEdge.size(); n++) {
             if (listaPassagem.contains(listaAuxEdge.get(n))) {
                 listaAuxEdge.remove(listaAuxEdge.get(n));
             }
         }
-
         for (i = 0; i < listaAuxEdge.size(); i++) {
             if (this.getEdges().get(i).getDirected()) {
                 if (noAtual.getId().equals(listaAuxEdge.get(i).getSource().getId())) {
                     listaSaidas.add(listaAuxEdge.get(i).getTarget());
                     listaAuxPassagem.add(listaAuxEdge.get(i));
                     if (listaAuxEdge.get(i).getTarget().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(listaCaminho.size(), noAtual);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(listaCadeia.size(), noAtual);
+                        return listaCadeia;
                     }
                 }
             } else {
@@ -502,23 +499,22 @@ public class Graph {
                     listaSaidas.add(listaAuxEdge.get(i).getTarget());
                     listaAuxPassagem.add(listaAuxEdge.get(i));
                     if (listaAuxEdge.get(i).getTarget().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(0, noAtual);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(0, noAtual);
+                        return listaCadeia;
                     }
                 } else if (noAtual.getId().equals(listaAuxEdge.get(i).getTarget().getId())) {
                     listaSaidas.add(listaAuxEdge.get(i).getSource());
                     listaAuxPassagem.add(listaAuxEdge.get(i));
                     if (listaAuxEdge.get(i).getSource().getId().equals(noProcurado.getId())) {
-                        ArrayList listaCaminho = new ArrayList();
-                        listaCaminho.add(noProcurado);
-                        listaCaminho.add(0, noAtual);
-                        return listaCaminho;
+                        ArrayList listaCadeia = new ArrayList();
+                        listaCadeia.add(noProcurado);
+                        listaCadeia.add(0, noAtual);
+                        return listaCadeia;
                     }
                 }
             }
-
         }
 
         if (listaSaidas.size()
@@ -527,7 +523,7 @@ public class Graph {
 
             for (j = 0; j < listaSaidas.size(); j++) {
                 listaPassagem.add(listaAuxPassagem.get(j));
-                ArrayList volta = this.getCadeiaAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem);
+                ArrayList volta = this.getCaminhoAuxiliar(listaSaidas.get(j), noProcurado, listaPassagem, listaAuxEdge);
                 if (volta != null) {
                     volta.add(0, noAtual);
                     return volta;
@@ -537,6 +533,7 @@ public class Graph {
 
         return null;
     }
+
     public Boolean isBiPartido() {
         int i;
         int separacao[] = new int[this.nodes.size()];

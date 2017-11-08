@@ -14,12 +14,14 @@ public class Edge {
 
     public Edge(String id) {
         this.id = id;
+        this.directed = false;
     }
 
     public Edge(String id, Node source, Node target) {
         this.id = id;
         this.source = source;
         this.target = target;
+        this.directed = false;
       
     }
 
