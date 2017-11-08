@@ -30,10 +30,10 @@ public class ControladorXML {
         xstream.alias("node", Node.class);
         xstream.alias("edge", Edge.class);
 
-        xstream.addImplicitCollection(Graph.class, "edges",Edge.class);
-        xstream.addImplicitCollection(Graph.class, "nodes",Node.class);
-        xstream.registerLocalConverter(Edge.class, "source",new NodeConverter());
-        xstream.registerLocalConverter(Edge.class, "target",new NodeConverter());
+        xstream.addImplicitCollection(Graph.class, "edges", Edge.class);
+        xstream.addImplicitCollection(Graph.class, "nodes", Node.class);
+        xstream.registerLocalConverter(Edge.class, "source", new NodeConverter());
+        xstream.registerLocalConverter(Edge.class, "target", new NodeConverter());
         xstream.useAttributeFor(Graph.class, "id");
         xstream.useAttributeFor(Graph.class, "edgedefault");
         xstream.useAttributeFor(Node.class, "id");
@@ -41,6 +41,7 @@ public class ControladorXML {
         xstream.useAttributeFor(Edge.class, "source");
         xstream.useAttributeFor(Edge.class, "target");
         xstream.useAttributeFor(Edge.class, "directed");
+        
     }
 
     public void salvaGrafo(Graph graph, String path) throws FileNotFoundException {
