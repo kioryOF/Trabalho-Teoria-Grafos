@@ -245,3 +245,138 @@ public class Graph {
 
         return matrizIncidencia;
     }
+
+    public int[][] getMatrizAdjacencia() {
+
+        int n = this.getNodes().size();
+        int m = this.getEdges().size();
+        int[][] matrizAdjacencia = new int[n][n];
+        int i, j, k;
+
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                boolean teste = this.isAdjacente(this.getNodes().get(i), this.getNodes().get(j));
+                if (teste) {
+                    for (k = 0; k < m; k++) {
+                        for (k = 0; k < m; k++) {
+                            if (this.getEdges().get(k).getDirected()) {
+                                if (this.edges.get(k).getSource().getId().equals(this.getNodes().get(i).getId())
+                                        && this.edges.get(k).getTarget().getId().equals(this.getNodes().get(j).getId())) {
+                                    matrizAdjacencia[i][j] = 1;
+
+                                }
+                            } else {
+                                matrizAdjacencia[i][j] = 1;
+
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+        return matrizAdjacencia;
+    }
+
+   
+    public ArrayList<ArrayList<Node>> getListaDeAdjacencia() {
+        int i, j;
+        ArrayList<ArrayList<Node>> lista = new ArrayList<>();
+        for (i = 0; i < this.nodes.size(); i++) {
+            ArrayList<Node> listaAux = new ArrayList<>();
+            for (j = 0; j < this.edges.size(); j++) {
+                if (this.edges.get(j).getDirected()) {
+                    if (this.edges.get(j).getSource().getId().equals(this.nodes.get(i).getId())) {
+                        listaAux.add(this.edges.get(j).getTarget());
+                    }
+                } else {
+                    if (this.edges.get(j).getSource().getId().equals(this.nodes.get(i).getId())) {
+                        listaAux.add(this.edges.get(j).getTarget());
+                    }
+                    if (this.edges.get(j).getTarget().getId().equals(this.nodes.get(i).getId())) {
+                        listaAux.add(this.edges.get(j).getSource());
+                    }
+                }
+            }
+            lista.add(listaAux);
+        }
+        return lista;
+    }
+
+    private ArrayList<Edge> getArestas(Node origem) {
+        ArrayList<Edge> arestas = new ArrayList<>();
+        int i;
+        for (i = 0; i < this.getEdges().size(); i++) {
+            if (this.getEdges().get(i).getDirected()) {
+                if (this.getEdges().get(i).getSource().getId().equals(origem.getId())) {
+                    arestas.add(this.getEdges().get(i));
+                }
+            } else {
+                if (this.getEdges().get(i).getSource().getId().equals(origem.getId()) || this.getEdges().get(i).getTarget().getId().equals(origem.getId())) {
+                    arestas.add(this.getEdges().get(i));
+                }
+            }
+
+        }
+
+        return arestas;
+    }
+
+    public Boolean isMultigrafo() {
+        int i, j;
+        for (i = 0; i < this.getEdges().size(); i++) {
+            for (j = 0; j < this.getEdges().size(); j++) {
+                if (this.getEdges().get(i).getTarget().getId().equals(this.getEdges().get(j).getSource().getId())) {
+
+                    if (this.getEdges().get(i).getSource().getId().equals(this.getEdges().get(j).getTarget().getId())) {
+                        return true;
+                    }
+                }
+            }
+
+            for (j = 0; j < this.getEdges().size(); j++) {
+                if ((this.getEdges().get(i).getSource().getId().equals(this.getEdges().get(j).getSource().getId()))
+                        && (this.getEdges().get(i).getTarget().getId().equals(this.getEdges().get(j).getTarget().getId()))
+                        && (!this.getEdges().get(i).getId().equals(this.getEdges().get(j).getId()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean isRegular() {
+        int i;
+        int grauTotal = this.getGrauTotal(this.getNodes().get(0));
+        for (i = 0; i < this.getNodes().size(); i++) {
+
+            if (this.getGrauTotal(this.getNodes().get(i)) != grauTotal) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Boolean isCompleto() {
+        if (this.isRegular()) {
+            for (int i = 0; i < this.getNodes().size(); i++) {
+                for (int j = 0; j < this.getNodes().size(); j++) {
+                    if (!(this.getNodes().get(i).getId().equals(this.getNodes().get(j).getId()))) {
+                        if (!(this.isAdjacente(this.getNodes().get(i), this.getNodes().get(j)))) {
+                            return false;
+                        }
+                    }
+                }
+
+            }
+            return true;
+
+        }
+
+        return false;
+    }
+
+	
