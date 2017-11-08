@@ -271,13 +271,13 @@ public class DadosNode extends javax.swing.JFrame {
         if (nos == null && TelaPrincipal.getGrafo().getCadeia(no2, no1) != null) {
             nos = TelaPrincipal.getGrafo().getCadeia(no2, no1);
             for (i = 0; i < nos.size(); i++) {
-                str += nos.get(i).getId();
+                str += nos.get(i).getId()+"\t";
             }
 
         } else {
             if (nos != null) {
                 for (i = 0; i < nos.size(); i++) {
-                    str += nos.get(i).getId();
+                    str += nos.get(i).getId()+"\t";
                 }
             } else {
                 str = "Não possui Cadeia";
@@ -288,7 +288,7 @@ public class DadosNode extends javax.swing.JFrame {
     }//GEN-LAST:event_cadeiaNosActionPerformed
 
     private void caminhoNosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caminhoNosActionPerformed
-          String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
+        String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
         String fim = (String) jComboBoxSegundoNo.getSelectedItem();
         Node no1 = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
         Node no2 = TelaPrincipal.getGrafo().pegarNodeDaLista(fim);
@@ -298,13 +298,13 @@ public class DadosNode extends javax.swing.JFrame {
         if (nos == null && TelaPrincipal.getGrafo().getCaminho(no2, no1) != null) {
             nos = TelaPrincipal.getGrafo().getCaminho(no2, no1);
             for (i = 0; i < nos.size(); i++) {
-                str += nos.get(i).getId();
+                str += nos.get(i).getId()+"\t";
             }
 
         } else {
             if (nos != null) {
                 for (i = 0; i < nos.size(); i++) {
-                    str += nos.get(i).getId();
+                    str += nos.get(i).getId()+"\t";
                 }
             } else {
                 str = "Não possui Caminho";
