@@ -2,8 +2,6 @@ package modelos;
 
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
 
 public class Graph {
 
@@ -33,6 +31,13 @@ public class Graph {
         this.edges = new ArrayList();
         this.edgedefault = edgedefault;
 
+    }
+
+    public Graph(String id, String edgedefault, ArrayList<Node> nodes, ArrayList<Edge> edges) {
+        this.id = id;
+        this.edgedefault = edgedefault;
+        this.nodes = nodes;
+        this.edges = edges;
     }
 
     public void addNodes(Node node) {
@@ -177,10 +182,15 @@ public class Graph {
     public boolean isAdjacente(Node no1, Node no2) {
         int i;
         for (i = 0; i < this.edges.size(); i++) {
-            if (this.edges.get(i).getSource().getId().equals(no1.getId()) && this.edges.get(i).getTarget().getId().equals(no2.getId())
-                    || this.edges.get(i).getSource().getId().equals(no2.getId()) && this.edges.get(i).getTarget().getId().equals(no1.getId())) {
-
-                return true;
+            if (this.edges.get(i).getDirected()) {
+                if (this.edges.get(i).getSource().getId().equals(no1.getId()) && this.edges.get(i).getTarget().getId().equals(no2.getId())) {
+                    return true;
+                }
+            } else {
+                if (this.edges.get(i).getSource().getId().equals(no1.getId()) && this.edges.get(i).getTarget().getId().equals(no2.getId())
+                        || this.edges.get(i).getSource().getId().equals(no2.getId()) && this.edges.get(i).getTarget().getId().equals(no1.getId())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -425,7 +435,7 @@ public class Graph {
                     if (this.edges.get(i).getTarget().getId().equals(noProcurado.getId())) {
                         ArrayList listaCadeia = new ArrayList();
                         listaCadeia.add(noProcurado);
-                        listaCadeia.add(listaCadeia.size(), noInicial);
+                        listaCadeia.add(0, noInicial);
                         return listaCadeia;
                     }
                 }
@@ -490,7 +500,7 @@ public class Graph {
                     if (listaAuxEdge.get(i).getTarget().getId().equals(noProcurado.getId())) {
                         ArrayList listaCadeia = new ArrayList();
                         listaCadeia.add(noProcurado);
-                        listaCadeia.add(listaCadeia.size(), noAtual);
+                        listaCadeia.add(0, noAtual);
                         return listaCadeia;
                     }
                 }
@@ -580,6 +590,37 @@ public class Graph {
             }
         }
 
+        return -1;
+    }
+    
+    public int getIndiceEdge(Edge edge){
+        int i;
+        for(i = 0; i < this.edges.size(); i++){
+            if(edge.getId().equals(this.edges.get(i).getId())){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
+    public int getIndiceEdgePorId(String edge){
+        int i;
+        for(i = 0; i < this.edges.size(); i++){
+            if(edge.equals(this.edges.get(i).getId())){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    public int getIndiceNodePorId(String node){
+        int i;
+        for(i = 0; i < this.nodes.size(); i++){
+            if(node.equals(this.nodes.get(i).getId())){
+                return i;
+            }
+        }
         return -1;
     }
 }

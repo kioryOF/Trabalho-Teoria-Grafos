@@ -13,10 +13,10 @@ public class RemoveEdge extends javax.swing.JFrame {
 
     private String[] atualizaArray() {
         ArrayList listaAresta = new ArrayList();
-        int tamanho = TelaPrincipal.getGrafo().getEdges().size();
+        int tamanho = TelaPrincipal.getGraphml().getGraph().getEdges().size();
         int i;
         for (i = 0; i < tamanho; i++) {
-            listaAresta.add(TelaPrincipal.getGrafo().getEdges().get(i).getId());
+            listaAresta.add(TelaPrincipal.getGraphml().getGraph().getEdges().get(i).getId());
         }
         String[] arrayAresta = (String[]) listaAresta.toArray(new String[listaAresta.size()]);
         return arrayAresta;
@@ -93,9 +93,9 @@ public class RemoveEdge extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int i;
-        for (i = 0; i < TelaPrincipal.getGrafo().getEdges().size(); i++) {
-            if (jComboBox1.getSelectedItem() == TelaPrincipal.getGrafo().getEdges().get(i).getId()) {
-                TelaPrincipal.getGrafo().removeEdge(TelaPrincipal.getGrafo().getEdges().get(i));
+        for (i = 0; i < TelaPrincipal.getGraphml().getGraph().getEdges().size(); i++) {
+            if (jComboBox1.getSelectedItem() == TelaPrincipal.getGraphml().getGraph().getEdges().get(i).getId()) {
+                TelaPrincipal.getGraphml().getGraph().removeEdge(TelaPrincipal.getGraphml().getGraph().getEdges().get(i));
             }
         }
         this.dispose();

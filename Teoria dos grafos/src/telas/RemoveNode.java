@@ -14,10 +14,10 @@ public class RemoveNode extends javax.swing.JFrame {
 
     private String[] atualizaArray() {
         ArrayList listaNo = new ArrayList();
-        int tamanho = TelaPrincipal.getGrafo().getNodes().size();
+        int tamanho = TelaPrincipal.getGraphml().getGraph().getNodes().size();
         int i;
         for (i = 0; i < tamanho; i++) {
-            listaNo.add(TelaPrincipal.getGrafo().getNodes().get(i).getId());
+            listaNo.add(TelaPrincipal.getGraphml().getGraph().getNodes().get(i).getId());
         }
         String[] arrayNo = (String[]) listaNo.toArray(new String[listaNo.size()]);
         return arrayNo;
@@ -93,9 +93,9 @@ public class RemoveNode extends javax.swing.JFrame {
 
     private void deletarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarNoActionPerformed
         int i;
-        for (i = 0; i < TelaPrincipal.getGrafo().getNodes().size(); i++) {
-            if (jComboBox1.getSelectedItem() == TelaPrincipal.getGrafo().getNodes().get(i).getId()) {
-                TelaPrincipal.getGrafo().removeNode(TelaPrincipal.getGrafo().getNodes().get(i));
+        for (i = 0; i < TelaPrincipal.getGraphml().getGraph().getNodes().size(); i++) {
+            if (jComboBox1.getSelectedItem() == TelaPrincipal.getGraphml().getGraph().getNodes().get(i).getId()) {
+                TelaPrincipal.getGraphml().getGraph().removeNode(TelaPrincipal.getGraphml().getGraph().getNodes().get(i));
             }
         }
         this.dispose();

@@ -2,6 +2,7 @@ package telas;
 
 import javax.swing.JOptionPane;
 import modelos.Graph;
+import modelos.Graphml;
 
 public class CriarNovoGraph extends javax.swing.JFrame {
 
@@ -96,17 +97,19 @@ public class CriarNovoGraph extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonCriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriaActionPerformed
-
-        this.nomeGrafo = jTextFieldNome.getText();
-
+        TelaPrincipal.setGraphml(new Graphml());
         int index = jComboBoxPadrao.getSelectedIndex();
-
+        Graphml grafoml = TelaPrincipal.getGraphml();
         if (index == 0) {
-            TelaPrincipal.setGrafo(new Graph(nomeGrafo));
+            Graph grafo = new Graph(jTextFieldNome.getText());
+            grafoml.setGraph(grafo);
+            TelaPrincipal.setGraphml(grafoml);
         } else if (index == 1) {
-            TelaPrincipal.setGrafo(new Graph(nomeGrafo, "directed"));
+            Graph grafo = new Graph(nomeGrafo, "directed");
+            TelaPrincipal.getGraphml().setGraph(grafo);
         } else if (index == 2) {
-            TelaPrincipal.setGrafo(new Graph(nomeGrafo, "undirected"));
+            Graph grafo = new Graph(nomeGrafo, "undirected");
+            TelaPrincipal.getGraphml().setGraph(grafo);
         }
 
         this.dispose();

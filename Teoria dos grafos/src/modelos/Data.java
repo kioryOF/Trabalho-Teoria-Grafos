@@ -1,38 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelos;
 
 public class Data {
 
-    float valor;
-    String descricao;
-    String rotulo;
+    private String keyId;
+    private String data;
 
-    public Data(float valor, String descricao) {
-        this.valor = valor;
-        this.descricao = descricao;
+    public Data() {
+
     }
 
-    public float getValor() {
-        return valor;
+    public Data(String keyId, String data) {
+        this.keyId = keyId;
+        this.data = data;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+     public Data(String data) {
+        this.data = data;
+    }
+     
+    public String getKeyId() {
+        return keyId;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public String getData() {
+        return data;
     }
 
-    public String getRotulo() {
-        return rotulo;
-    }
-
-    public void setRotulo(String rotulo) {
-        this.rotulo = rotulo;
+    public void setData(String data) {
+        this.data = data;
     }
 
 }

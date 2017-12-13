@@ -14,10 +14,10 @@ public class DadosNode extends javax.swing.JFrame {
 
     private String[] atualizaArray() {
         ArrayList listaNo = new ArrayList();
-        int tamanho = TelaPrincipal.getGrafo().getNodes().size();
+        int tamanho = TelaPrincipal.getGraphml().getGraph().getNodes().size();
         int i;
         for (i = 0; i < tamanho; i++) {
-            listaNo.add(TelaPrincipal.getGrafo().getNodes().get(i).getId());
+            listaNo.add(TelaPrincipal.getGraphml().getGraph().getNodes().get(i).getId());
         }
         String[] arrayNo = (String[]) listaNo.toArray(new String[listaNo.size()]);
         return arrayNo;
@@ -212,26 +212,26 @@ public class DadosNode extends javax.swing.JFrame {
 
     private void grauEmissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauEmissaoActionPerformed
         String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
-        Node origem = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
+        Node origem = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(inicio);
         String str = "Grau de Emissão : \n" + origem.getId() + " :\t";;
-        str += TelaPrincipal.getGrafo().getGrauEmissao(origem);
+        str += TelaPrincipal.getGraphml().getGraph().getGrauEmissao(origem);
         areaTexto.setText(str);
     }//GEN-LAST:event_grauEmissaoActionPerformed
 
     private void grauRecepcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauRecepcaoActionPerformed
         String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
-        Node origem = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
+        Node origem = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(inicio);
         String str = "Grau de Recepção : \n" + origem.getId() + " :\t";
-        str += TelaPrincipal.getGrafo().getGrauRecepcao(origem);
+        str += TelaPrincipal.getGraphml().getGraph().getGrauRecepcao(origem);
         areaTexto.setText(str);
     }//GEN-LAST:event_grauRecepcaoActionPerformed
 
     private void nosAdjacentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nosAdjacentesActionPerformed
         String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
         String fim = (String) jComboBoxSegundoNo.getSelectedItem();
-        Node origem = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
-        Node alvo = TelaPrincipal.getGrafo().pegarNodeDaLista(fim);
-        if (TelaPrincipal.getGrafo().isAdjacente(origem, alvo)) {
+        Node origem = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(inicio);
+        Node alvo = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(fim);
+        if (TelaPrincipal.getGraphml().getGraph().isAdjacente(origem, alvo)) {
             areaTexto.setText("São adjacentes");
         } else {
             areaTexto.setText("Não são adjacentes");
@@ -243,12 +243,12 @@ public class DadosNode extends javax.swing.JFrame {
         int i;
         String sumidouro = "Vertices Sumidouros :\n";
         String fonte = "Vertices Fontes :\n";
-        for (i = 0; i < TelaPrincipal.getGrafo().getNodes().size(); i++) {
-            if (TelaPrincipal.getGrafo().isSumidouro(TelaPrincipal.getGrafo().getNodes().get(i))) {
-                sumidouro += TelaPrincipal.getGrafo().getNodes().get(i).getId() + "\n";
+        for (i = 0; i < TelaPrincipal.getGraphml().getGraph().getNodes().size(); i++) {
+            if (TelaPrincipal.getGraphml().getGraph().isSumidouro(TelaPrincipal.getGraphml().getGraph().getNodes().get(i))) {
+                sumidouro += TelaPrincipal.getGraphml().getGraph().getNodes().get(i).getId() + "\n";
             } else {
-                if (TelaPrincipal.getGrafo().isFonte(TelaPrincipal.getGrafo().getNodes().get(i))) {
-                    fonte += TelaPrincipal.getGrafo().getNodes().get(i).getId() + "\n";
+                if (TelaPrincipal.getGraphml().getGraph().isFonte(TelaPrincipal.getGraphml().getGraph().getNodes().get(i))) {
+                    fonte += TelaPrincipal.getGraphml().getGraph().getNodes().get(i).getId() + "\n";
                 }
             }
 
@@ -263,13 +263,13 @@ public class DadosNode extends javax.swing.JFrame {
     private void cadeiaNosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadeiaNosActionPerformed
         String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
         String fim = (String) jComboBoxSegundoNo.getSelectedItem();
-        Node no1 = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
-        Node no2 = TelaPrincipal.getGrafo().pegarNodeDaLista(fim);
-        ArrayList<Node> nos = TelaPrincipal.getGrafo().getCadeia(no1, no2);
+        Node no1 = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(inicio);
+        Node no2 = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(fim);
+        ArrayList<Node> nos = TelaPrincipal.getGraphml().getGraph().getCadeia(no1, no2);
         String str = "";
         int i;
-        if (nos == null && TelaPrincipal.getGrafo().getCadeia(no2, no1) != null) {
-            nos = TelaPrincipal.getGrafo().getCadeia(no2, no1);
+        if (nos == null && TelaPrincipal.getGraphml().getGraph().getCadeia(no2, no1) != null) {
+            nos = TelaPrincipal.getGraphml().getGraph().getCadeia(no2, no1);
             for (i = 0; i < nos.size(); i++) {
                 str += nos.get(i).getId()+"\t";
             }
@@ -290,13 +290,13 @@ public class DadosNode extends javax.swing.JFrame {
     private void caminhoNosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caminhoNosActionPerformed
         String inicio = (String) jComboBoxPrimeiroNo.getSelectedItem();
         String fim = (String) jComboBoxSegundoNo.getSelectedItem();
-        Node no1 = TelaPrincipal.getGrafo().pegarNodeDaLista(inicio);
-        Node no2 = TelaPrincipal.getGrafo().pegarNodeDaLista(fim);
-        ArrayList<Node> nos = TelaPrincipal.getGrafo().getCaminho(no1, no2);
+        Node no1 = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(inicio);
+        Node no2 = TelaPrincipal.getGraphml().getGraph().pegarNodeDaLista(fim);
+        ArrayList<Node> nos = TelaPrincipal.getGraphml().getGraph().getCaminho(no1, no2);
         String str = "";
         int i;
-        if (nos == null && TelaPrincipal.getGrafo().getCaminho(no2, no1) != null) {
-            nos = TelaPrincipal.getGrafo().getCaminho(no2, no1);
+        if (nos == null && TelaPrincipal.getGraphml().getGraph().getCaminho(no2, no1) != null) {
+            nos = TelaPrincipal.getGraphml().getGraph().getCaminho(no2, no1);
             for (i = 0; i < nos.size(); i++) {
                 str += nos.get(i).getId()+"\t";
             }

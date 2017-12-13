@@ -1,13 +1,13 @@
 package modelos;
 
-
 public class Edge {
 
     private String id;
     private Boolean directed;
     private Node source;
     private Node target;
-    
+    private Data data;
+
     public Edge() {
 
     }
@@ -22,14 +22,31 @@ public class Edge {
         this.source = source;
         this.target = target;
         this.directed = false;
-      
     }
+
+    public Edge(String id, Boolean directed, Node source, Node target, Data data) {
+        this.id = id;
+        this.directed = directed;
+        this.source = source;
+        this.target = target;
+        this.data = data;
+    }
+    
+    
 
     public Edge(String id, Node source, Node target, Boolean directed) {
         this.id = id;
         this.source = source;
         this.target = target;
         this.directed = directed;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 
     public String getId() {

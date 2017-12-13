@@ -5,9 +5,12 @@ import modelos.Node;
 
 public class AdicionaNode extends javax.swing.JFrame {
 
+    static Node no;
+
     public AdicionaNode() {
 
         initComponents();
+        no = new Node();
     }
 
     @SuppressWarnings("unchecked")
@@ -85,9 +88,9 @@ public class AdicionaNode extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNomeNodeActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        Node no = new Node(jTextFieldNomeNode.getText());
-        TelaPrincipal.getGrafo().addNodes(no);
-        
+        no.setId(jTextFieldNomeNode.getText());
+        TelaPrincipal.getGraphml().getGraph().addNodes(no);
+
         this.dispose();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
