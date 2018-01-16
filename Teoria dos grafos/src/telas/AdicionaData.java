@@ -86,7 +86,7 @@ public class AdicionaData extends javax.swing.JFrame {
         jRadioButtonNode = new javax.swing.JRadioButton();
         jComboBoxSelecao = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jComboBoxKey.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

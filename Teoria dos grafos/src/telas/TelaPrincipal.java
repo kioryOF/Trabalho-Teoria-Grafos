@@ -12,10 +12,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelos.Dijkstra;
-import modelos.Edge;
 import modelos.Graphml;
 import modelos.Kruskal;
 import modelos.Node;
+import modelos.OrdenacaoTopologica;
+import modelos.BuscaProfundidade;
+import modelos.BuscaLargura;
+import modelos.FordFulkerson;
+import modelos.Malgrange;
 import modelos.Prim;
 import xml.ControladorXML;
 
@@ -39,6 +43,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         graphml = new Graphml();
         this.jButtonSalvar.setVisible(false);
         this.jPanelDijkstra.setVisible(false);
+        this.jPanelFord.setVisible(false);
+        this.jPanelBusca.setVisible(false);
 
     }
 
@@ -100,6 +106,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jTextFieldMenor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jButtonDijkstra = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButtonMalgrange = new javax.swing.JButton();
+        jButtonFordFulkerson = new javax.swing.JButton();
+        jButtonBuscaNoGrafo = new javax.swing.JButton();
+        jButtonOrdenacaoTopologica = new javax.swing.JButton();
+        jPanelFord = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBoxNoSaidaFord = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBoxNoChegadaFord = new javax.swing.JComboBox<>();
+        jButtonCalculaFluxoMaximo = new javax.swing.JButton();
+        jPanelBusca = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBoxNoSaidaBuscas = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jButtonBuscaProfundidade = new javax.swing.JButton();
+        jButtonBuscaLargura = new javax.swing.JButton();
+        jButtonSalvar2 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextAreaAlgoritmos2 = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -187,7 +214,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanelVerticesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanelVerticesLayout.createSequentialGroup()
                 .addGroup(jPanelVerticesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCriaNovoGraph, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(jButtonCriaNovoGraph, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                     .addComponent(jButtonAdicionaNode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonAdicionaEdge, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonAddKey)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAddData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(jButtonVisualizar)
                 .addGap(36, 36, 36)
                 .addComponent(jButtonSalvarGraph))
@@ -325,7 +352,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCarregarGrafoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCarregarGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -399,7 +426,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(matrizIncidencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonCaracteristicas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonTipoGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonVisualizarGraficamente, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                    .addComponent(jButtonVisualizarGraficamente, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -423,7 +450,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jButtonVisualizarGraficamente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonCaracteristicas)
-                        .addGap(0, 139, Short.MAX_VALUE))
+                        .addGap(0, 145, Short.MAX_VALUE))
                     .addComponent(jScrollPane3))
                 .addContainerGap())
         );
@@ -499,37 +526,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanelDijkstraLayout.setHorizontalGroup(
             jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDijkstraLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDijkstraLayout.createSequentialGroup()
+                        .addGap(0, 84, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldMenor, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelDijkstraLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelDijkstraLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDijkstraLayout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldMenor, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelDijkstraLayout.createSequentialGroup()
-                                .addGroup(jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelDijkstraLayout.createSequentialGroup()
-                                        .addComponent(jComboBoxMenor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonEscolherMenor))
-                                    .addGroup(jPanelDijkstraLayout.createSequentialGroup()
-                                        .addComponent(jComboBoxRaiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonEscolherRaiz))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jComboBoxMenor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonEscolherMenor))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4)
+                                .addGroup(jPanelDijkstraLayout.createSequentialGroup()
+                                    .addComponent(jComboBoxRaiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButtonEscolherRaiz))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDijkstraLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(51, 51, 51))
         );
         jPanelDijkstraLayout.setVerticalGroup(
             jPanelDijkstraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -605,11 +625,218 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Algoritmos", jPanel3);
 
+        jButtonMalgrange.setText("Malgrange");
+        jButtonMalgrange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMalgrangeActionPerformed(evt);
+            }
+        });
+
+        jButtonFordFulkerson.setText("Ford-Fulkerson");
+        jButtonFordFulkerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFordFulkersonActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscaNoGrafo.setText("Buscas no grafo");
+        jButtonBuscaNoGrafo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscaNoGrafoActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenacaoTopologica.setText("Ordenação topológica");
+        jButtonOrdenacaoTopologica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenacaoTopologicaActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Painel Ford");
+
+        jLabel12.setText("Nó saida");
+
+        jComboBoxNoSaidaFord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel13.setText("Nó chegada");
+
+        jComboBoxNoChegadaFord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButtonCalculaFluxoMaximo.setText("Calcula Fluxo Máximo");
+        jButtonCalculaFluxoMaximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCalculaFluxoMaximoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelFordLayout = new javax.swing.GroupLayout(jPanelFord);
+        jPanelFord.setLayout(jPanelFordLayout);
+        jPanelFordLayout.setHorizontalGroup(
+            jPanelFordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonCalculaFluxoMaximo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelFordLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelFordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBoxNoSaidaFord, 0, 86, Short.MAX_VALUE)
+                    .addComponent(jComboBoxNoChegadaFord, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelFordLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanelFordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addGroup(jPanelFordLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel12)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelFordLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel13)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelFordLayout.setVerticalGroup(
+            jPanelFordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFordLayout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxNoSaidaFord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxNoChegadaFord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jButtonCalculaFluxoMaximo)
+                .addContainerGap())
+        );
+
+        jLabel10.setText("Painel busca");
+
+        jComboBoxNoSaidaBuscas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNoSaidaBuscas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxNoSaidaBuscasActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Escolha um nó de saída:");
+
+        jButtonBuscaProfundidade.setText("Busca Profundidade");
+        jButtonBuscaProfundidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscaProfundidadeActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscaLargura.setText("Busca Largura");
+        jButtonBuscaLargura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscaLarguraActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelBuscaLayout = new javax.swing.GroupLayout(jPanelBusca);
+        jPanelBusca.setLayout(jPanelBuscaLayout);
+        jPanelBuscaLayout.setHorizontalGroup(
+            jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBuscaLayout.createSequentialGroup()
+                .addGroup(jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBuscaLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel10))
+                    .addComponent(jButtonBuscaProfundidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(jButtonBuscaLargura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBuscaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelBuscaLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jComboBoxNoSaidaBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel11))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelBuscaLayout.setVerticalGroup(
+            jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBuscaLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxNoSaidaBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonBuscaProfundidade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBuscaLargura)
+                .addGap(16, 16, 16))
+        );
+
+        jButtonSalvar2.setText("Salvar");
+        jButtonSalvar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvar2ActionPerformed(evt);
+            }
+        });
+
+        jTextAreaAlgoritmos2.setColumns(20);
+        jTextAreaAlgoritmos2.setRows(5);
+        jScrollPane5.setViewportView(jTextAreaAlgoritmos2);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelFord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonMalgrange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonFordFulkerson, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonOrdenacaoTopologica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBuscaNoGrafo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jButtonSalvar2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonMalgrange)
+                            .addComponent(jButtonOrdenacaoTopologica))
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBuscaNoGrafo)
+                            .addComponent(jButtonFordFulkerson))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelFord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(90, 90, 90)
+                        .addComponent(jButtonSalvar2)))
+                .addContainerGap())
+        );
+
+        jTabbedPane.addTab("Algoritmos continuação", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane)
+            .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -636,27 +863,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButtonTipoGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTipoGrafoActionPerformed
         String str = "";
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
-        } else if (this.graphml.getGraph().getNodes().isEmpty()) {
+        } else if (graphml.getGraph().getNodes().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
             this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
 
-            if (this.graphml.getGraph().isMultigrafo()) {
+            if (graphml.getGraph().isMultigrafo()) {
                 str += "Multigrafo" + "\n";
             }
-            if (this.graphml.getGraph().isRegular()) {
+            if (graphml.getGraph().isRegular()) {
                 str += "Regular" + "\n";
             }
-            if (this.graphml.getGraph().isCompleto()) {
+            if (graphml.getGraph().isCompleto()) {
                 str += "Completo";
             }
-            if (this.graphml.getGraph().isBiPartido()) {
+            if (graphml.getGraph().isBiPartido()) {
                 str += "Bipartido";
             }
-            if (str == "") {
+            if ("".equals(str)) {
                 str = "Não tem tipo";
             }
 
@@ -665,23 +892,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonTipoGrafoActionPerformed
 
     private void jButtonOrdemGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdemGrafoActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
-        } else if (this.graphml.getGraph().getNodes().isEmpty()) {
+        } else if (graphml.getGraph().getNodes().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
             this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
-            String str = "Ordem do grafo é : " + this.graphml.getGraph().getOrdem();
+            String str = "Ordem do grafo é : " + graphml.getGraph().getOrdem();
             areaRepresentacao.setText(str);
         }
     }//GEN-LAST:event_jButtonOrdemGrafoActionPerformed
 
     private void jButtonCaracteristicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCaracteristicasActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
-        } else if (this.graphml.getGraph().getNodes().isEmpty()) {
+        } else if (graphml.getGraph().getNodes().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
             this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
@@ -691,11 +918,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCaracteristicasActionPerformed
 
     private void matrizIncidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizIncidenciaActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
-            if (this.graphml.getGraph().getEdges().size() > 0) {
+            if (graphml.getGraph().getEdges().size() > 0) {
                 int linha = graphml.getGraph().getNodes().size();
                 int coluna = graphml.getGraph().getEdges().size();
                 int i, j;
@@ -731,20 +958,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void listaAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAdjacenciaActionPerformed
 
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
 
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
-            if (this.graphml.getGraph().getEdges().size() > 0) {
+            if (graphml.getGraph().getEdges().size() > 0) {
                 int i, j;
 
                 String str = "";
-                for (i = 0; i < this.graphml.getGraph().getListaDeAdjacencia().size(); i++) {
-                    str += this.graphml.getGraph().getNodes().get(i).getId() + " :\t";
+                for (i = 0; i < graphml.getGraph().getListaDeAdjacencia().size(); i++) {
+                    str += graphml.getGraph().getNodes().get(i).getId() + " :\t";
                     ArrayList<Node> listaNo = graphml.getGraph().getListaDeAdjacencia().get(i);
 
-                   
                     for (j = 0; j < listaNo.size(); j++) {
 
                         str += listaNo.get(j).getId() + "  ";
@@ -752,7 +978,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     str += "\n";
 
                 }
-            
+
                 areaRepresentacao.setText(str);
             } else {
                 JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
@@ -762,12 +988,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_listaAdjacenciaActionPerformed
 
     private void matrizAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdjacenciaActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
-            if (this.graphml.getGraph().getEdges().size() > 0) {
-                int n = this.graphml.getGraph().getNodes().size();
+            if (graphml.getGraph().getEdges().size() > 0) {
+                int n = graphml.getGraph().getNodes().size();
                 //int m = grafo.getEdges().size();
                 int i, j;
                 String str = "\t";
@@ -806,7 +1032,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ControladorXML xml = new ControladorXML();
             try {
                 graphml = xml.carregarGrafo(fileChooser.getSelectedFile().getPath());
-               
+
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo .xml");
 
@@ -829,10 +1055,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddKeyActionPerformed
 
     private void removeArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeArestaActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
-        } else if (graphml.getGraph().getEdges().size() == 0) {
+        } else if (graphml.getGraph().getEdges().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar uma aresta antes");
             this.jButtonAdicionaEdgeActionPerformed(evt);
         } else {
@@ -842,11 +1068,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_removeArestaActionPerformed
 
     private void removeNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeNoActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         }
-        if (graphml.getGraph().getNodes().size() == 0) {
+        if (graphml.getGraph().getNodes().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um no antes");
             this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
@@ -857,7 +1083,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButtonVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarActionPerformed
 
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
@@ -868,7 +1094,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButtonAdicionaNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionaNodeActionPerformed
 
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
@@ -878,7 +1104,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAdicionaNodeActionPerformed
 
     private void jButtonSalvarGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarGraphActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
@@ -890,7 +1116,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (retrival == JFileChooser.APPROVE_OPTION) {
                 try {
                     xml.salvaGrafo(graphml, chooser.getSelectedFile() + ".xml");
-                } catch (Exception ex) {
+                } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo .xml");
                 }
             }
@@ -898,10 +1124,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarGraphActionPerformed
 
     private void jButtonAdicionaEdgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionaEdgeActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
-        } else if (this.graphml.getGraph().getNodes().isEmpty()) {
+        } else if (graphml.getGraph().getNodes().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Você precisa criar pelo menos 1 nó antes");
             this.jButtonAdicionaNodeActionPerformed(evt);
         } else {
@@ -917,9 +1143,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButtonKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKruskalActionPerformed
         this.jPanelDijkstra.setVisible(false);
-        
+
         Kruskal kruskal = new Kruskal();
-        this.arvore = kruskal.getKruskal(this.graphml);
+        this.arvore = kruskal.getKruskal(new Graphml(graphml));
 
         ControladorXML xml = new ControladorXML();
         this.jTextAreaAlgoritmos.setText(xml.mostraGrafo(this.arvore));
@@ -928,7 +1154,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonKruskalActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        if (this.graphml.getGraph() == null) {
+        if (graphml.getGraph() == null) {
             JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
             this.jButtonCriaNovoGraphActionPerformed(evt);
         } else {
@@ -939,7 +1165,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (retrival == JFileChooser.APPROVE_OPTION) {
                 try {
                     xml.salvaGrafo(this.arvore, chooser.getSelectedFile() + ".xml");
-                } catch (Exception ex) {
+                } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo .xml");
                 }
             }
@@ -949,8 +1175,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButtonPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrimActionPerformed
         this.jPanelDijkstra.setVisible(false);
         Prim prim = new Prim();
-        this.arvore = prim.getPrim(this.graphml);
-        
+        this.arvore = prim.getPrim(new Graphml(graphml));
+
         ControladorXML xml = new ControladorXML();
         this.jTextAreaAlgoritmos.setText(xml.mostraGrafo(this.arvore));
 
@@ -968,7 +1194,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             this.jComboBoxRaiz.addItem(graphml.getGraph().getNodes().get(j).getId());
         }
 
-        this.dij = new Dijkstra(this.graphml);
+        this.dij = new Dijkstra(new Graphml(graphml));
+        this.jButtonSalvar.setVisible(false);
     }//GEN-LAST:event_jButtonDijkstraActionPerformed
 
     private void jComboBoxMenorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMenorActionPerformed
@@ -987,17 +1214,117 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int i = dij.getGraph().getIndiceNodePorId(noId);
 
         float menor = dij.menorDistancia(dij.getGraph().getNodes().get(i));
-        if(menor == Float.MAX_VALUE){
+        if (menor == Float.MAX_VALUE) {
             this.jTextFieldMenor.setText("infinito");
-        }else{
+        } else {
             this.jTextFieldMenor.setText(Float.toString(menor));
         }
-        
+
     }//GEN-LAST:event_jButtonEscolherMenorActionPerformed
 
     private void jTextFieldMenorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMenorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMenorActionPerformed
+
+    private void jButtonBuscaNoGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscaNoGrafoActionPerformed
+        this.jPanelFord.setVisible(false);
+        this.jPanelBusca.setVisible(true);
+        this.jComboBoxNoSaidaBuscas.removeAllItems();
+        int j;
+        for (j = 0; j < graphml.getGraph().getNodes().size(); j++) {
+            this.jComboBoxNoSaidaBuscas.addItem(graphml.getGraph().getNodes().get(j).getId());
+        }
+    }//GEN-LAST:event_jButtonBuscaNoGrafoActionPerformed
+
+    private void jButtonFordFulkersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFordFulkersonActionPerformed
+        this.jButtonSalvar2.setVisible(false);
+        this.jPanelBusca.setVisible(false);
+        this.jPanelFord.setVisible(true);
+        this.jComboBoxNoSaidaFord.removeAllItems();
+        this.jComboBoxNoChegadaFord.removeAllItems();
+        int j;
+        for (j = 0; j < graphml.getGraph().getNodes().size(); j++) {
+            this.jComboBoxNoSaidaFord.addItem(graphml.getGraph().getNodes().get(j).getId());
+            this.jComboBoxNoChegadaFord.addItem(graphml.getGraph().getNodes().get(j).getId());
+        }
+
+
+    }//GEN-LAST:event_jButtonFordFulkersonActionPerformed
+
+    private void jButtonOrdenacaoTopologicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenacaoTopologicaActionPerformed
+        this.jButtonSalvar2.setVisible(false);
+        this.jPanelBusca.setVisible(false);
+        this.jPanelFord.setVisible(false);
+        OrdenacaoTopologica ordenar = new OrdenacaoTopologica(new Graph(graphml.getGraph()));
+        ArrayList<Node> ordemNos = ordenar.getOrdenacaoTopologica();
+        String str = "";
+        for (int i = 0; i < ordemNos.size(); i++) {
+            str += ordemNos.get(i).getId() + "\n";
+        }
+        this.jTextAreaAlgoritmos2.setText(str);
+
+    }//GEN-LAST:event_jButtonOrdenacaoTopologicaActionPerformed
+
+    private void jButtonMalgrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMalgrangeActionPerformed
+        this.jButtonSalvar2.setVisible(false);
+        this.jPanelBusca.setVisible(false);
+        this.jPanelFord.setVisible(false);
+        Malgrange mg = new Malgrange();
+        this.jTextAreaAlgoritmos2.setText("As componentes f-conexas são: "+mg.getMalgrange(new Graphml(graphml)));
+    }//GEN-LAST:event_jButtonMalgrangeActionPerformed
+
+    private void jButtonBuscaProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscaProfundidadeActionPerformed
+        this.jButtonSalvar2.setVisible(true);
+        String noId = this.jComboBoxNoSaidaBuscas.getSelectedItem().toString();
+        Graphml grafoDfs = new Graphml(graphml);
+        BuscaProfundidade buscaProfundidade = new BuscaProfundidade(grafoDfs);
+        this.arvore = buscaProfundidade.getDfs(grafoDfs.getGraph().pegarNodeDaLista(noId));
+        ControladorXML xml = new ControladorXML();
+        System.out.println(xml.mostraGrafo(this.arvore));
+        jTextAreaAlgoritmos2.setText(xml.mostraGrafo(this.arvore));
+    }//GEN-LAST:event_jButtonBuscaProfundidadeActionPerformed
+
+    private void jButtonSalvar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvar2ActionPerformed
+        if (graphml.getGraph() == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa criar um grafo antes");
+            this.jButtonCriaNovoGraphActionPerformed(evt);
+        } else {
+            ControladorXML xml = new ControladorXML();
+
+            JFileChooser chooser = new JFileChooser();
+            int retrival = chooser.showSaveDialog(null);
+            if (retrival == JFileChooser.APPROVE_OPTION) {
+                try {
+                    xml.salvaGrafo(this.arvore, chooser.getSelectedFile() + ".xml");
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo .xml");
+                }
+            }
+        }
+    }//GEN-LAST:event_jButtonSalvar2ActionPerformed
+
+    private void jButtonCalculaFluxoMaximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculaFluxoMaximoActionPerformed
+        String saida = this.jComboBoxNoSaidaFord.getSelectedItem().toString();
+        String chegada = this.jComboBoxNoChegadaFord.getSelectedItem().toString();
+        Graphml gml = new Graphml(graphml);
+        FordFulkerson ff = new FordFulkerson();
+        Double fluxoMaximo = ff.getFluxoMaximo(gml, gml.getGraph().pegarNodeDaLista(saida), gml.getGraph().pegarNodeDaLista(chegada));
+        jTextAreaAlgoritmos2.setText("Fluxo máximo do do nó " + saida + " até o nó " + chegada + " é de :" + fluxoMaximo.toString());
+    }//GEN-LAST:event_jButtonCalculaFluxoMaximoActionPerformed
+
+    private void jButtonBuscaLarguraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscaLarguraActionPerformed
+        this.jButtonSalvar2.setVisible(true);
+        String noId = this.jComboBoxNoSaidaBuscas.getSelectedItem().toString();
+        Graphml grafoBfs = new Graphml(graphml);
+        BuscaLargura bfs = new BuscaLargura();
+        this.arvore = bfs.getBfs(grafoBfs, grafoBfs.getGraph().pegarNodeDaLista(noId));
+        ControladorXML xml = new ControladorXML();
+        jTextAreaAlgoritmos2.setText(xml.mostraGrafo(this.arvore));
+    }//GEN-LAST:event_jButtonBuscaLarguraActionPerformed
+
+    private void jComboBoxNoSaidaBuscasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNoSaidaBuscasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNoSaidaBuscasActionPerformed
 
     public static void main(String args[]) {
 
@@ -1050,23 +1377,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAddKey;
     private javax.swing.JButton jButtonAdicionaEdge;
     private javax.swing.JButton jButtonAdicionaNode;
+    private javax.swing.JButton jButtonBuscaLargura;
+    private javax.swing.JButton jButtonBuscaNoGrafo;
+    private javax.swing.JButton jButtonBuscaProfundidade;
+    private javax.swing.JButton jButtonCalculaFluxoMaximo;
     private javax.swing.JButton jButtonCaracteristicas;
     private javax.swing.JButton jButtonCriaNovoGraph;
     private javax.swing.JButton jButtonDijkstra;
     private javax.swing.JButton jButtonEscolherMenor;
     private javax.swing.JButton jButtonEscolherRaiz;
+    private javax.swing.JButton jButtonFordFulkerson;
     private javax.swing.JButton jButtonKruskal;
-    private javax.swing.JButton jButtonOrdemGrafo;
+    private javax.swing.JButton jButtonMalgrange;
+    public javax.swing.JButton jButtonOrdemGrafo;
+    private javax.swing.JButton jButtonOrdenacaoTopologica;
     private javax.swing.JButton jButtonPrim;
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonSalvar2;
     private javax.swing.JButton jButtonSalvarGraph;
     private javax.swing.JButton jButtonTipoGrafo;
     private javax.swing.JButton jButtonVisualizar;
     private javax.swing.JButton jButtonVisualizarGraficamente;
     private javax.swing.JComboBox<String> jComboBoxMenor;
+    private javax.swing.JComboBox<String> jComboBoxNoChegadaFord;
+    private javax.swing.JComboBox<String> jComboBoxNoSaidaBuscas;
+    private javax.swing.JComboBox<String> jComboBoxNoSaidaFord;
     private javax.swing.JComboBox<String> jComboBoxRaiz;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1074,19 +1416,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel9;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelCarregarGrafo;
     private javax.swing.JPanel jPanelCriarGrafo;
     private javax.swing.JPanel jPanelDijkstra;
+    private javax.swing.JPanel jPanelFord;
     private javax.swing.JPanel jPanelVertices;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTextArea jTextAreaAlgoritmos;
+    private javax.swing.JTextArea jTextAreaAlgoritmos2;
     private javax.swing.JTextArea jTextAreaGrafo;
     private javax.swing.JTextField jTextFieldMenor;
     private javax.swing.JButton listaAdjacencia;
