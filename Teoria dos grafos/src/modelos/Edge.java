@@ -8,13 +8,27 @@ public class Edge {
     private Node target;
     private Data data;
 
-    public Edge() {
+    public Edge(Edge original) {
+        this.id = original.getId();
+        this.directed = original.getDirected();
+        this.source = new Node(original.getSource());
+        this.target = new Node(original.getTarget());
+        if (original.getData() != null) {
+            this.data = new Data(original.getData());
+        }else{
+            
+        }
 
+    }
+
+    public Edge() {
+        this.data = new Data();
     }
 
     public Edge(String id) {
         this.id = id;
         this.directed = false;
+        this.data = new Data();
     }
 
     public Edge(String id, Node source, Node target) {
@@ -22,6 +36,7 @@ public class Edge {
         this.source = source;
         this.target = target;
         this.directed = false;
+        this.data = new Data();
     }
 
     public Edge(String id, Boolean directed, Node source, Node target, Data data) {
@@ -31,14 +46,13 @@ public class Edge {
         this.target = target;
         this.data = data;
     }
-    
-    
 
     public Edge(String id, Node source, Node target, Boolean directed) {
         this.id = id;
         this.source = source;
         this.target = target;
         this.directed = directed;
+        this.data = new Data();
     }
 
     public Data getData() {

@@ -7,9 +7,27 @@ public class Graphml {
     private ArrayList<Key> keys;
     private Graph graph;
 
+    public Graphml(Graphml original) {
+        this.graph = new Graph(original.getGraph());
+
+        if (original.getKeys() != null) {
+            ArrayList<Key> keysCopy = new ArrayList<>();
+            for (int i = 0; i < original.getKeys().size(); i++) {
+                Key key = new Key(original.getKeys().get(i));
+                keysCopy.add(key);
+            }
+            this.keys = keysCopy;
+        } else {
+            this.keys = new ArrayList<>();
+        }
+
+    }
+
     public Graphml(Graph graph, ArrayList<Key> keys) {
         this.graph = graph;
+
         this.keys = keys;
+
     }
 
     public Graphml(Graph graph) {

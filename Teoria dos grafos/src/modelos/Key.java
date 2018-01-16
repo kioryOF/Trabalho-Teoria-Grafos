@@ -6,6 +6,15 @@ public class Key {
     private String paraObjeto;
     private String attributeName;
     private String attributeType;
+    private String defaultType;
+    
+    public Key(Key original){
+        this.id = original.getId();
+        this.paraObjeto = original.getParaObjeto();
+        this.attributeName = original.getAttributeName();
+        this.attributeType = original.getAttributeType();
+        this.defaultType = original.getDefaultType();
+    }
     
     public Key(){
         
@@ -17,8 +26,15 @@ public class Key {
         this.attributeName = attributeName;
         this.attributeType = attributeType;
     }
-    
 
+    public String getDefaultType() {
+        return defaultType;
+    }
+
+    public void setDefaultType(String defaultType) {
+        this.defaultType = defaultType;
+    }
+    
     public String getId() {
         return id;
     }

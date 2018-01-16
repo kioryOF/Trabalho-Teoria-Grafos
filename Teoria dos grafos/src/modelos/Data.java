@@ -10,6 +10,16 @@ public class Data {
     private String keyId;
     private String data;
 
+    public Data(Data original) {
+        if (original.getData() != null) {
+            this.data = original.getData();
+        }
+        if (original.getKeyId() != null) {
+            this.keyId = original.getKeyId();
+        }
+
+    }
+
     public Data() {
 
     }
@@ -19,10 +29,10 @@ public class Data {
         this.data = data;
     }
 
-     public Data(String data) {
+    public Data(String data) {
         this.data = data;
     }
-     
+
     public String getKeyId() {
         return keyId;
     }

@@ -45,6 +45,7 @@ public class ControladorXML {
         xstream.aliasField("attr.name", Key.class, "attributeName");
         xstream.aliasField("attr.type", Key.class, "attributeType");
         xstream.aliasField("key", Data.class, "keyId");
+        xstream.aliasField("default", Key.class, "defaultType");
 
         xstream.addImplicitCollection(Graph.class, "edges", Edge.class);
         xstream.addImplicitCollection(Graph.class, "nodes", Node.class);
@@ -86,6 +87,11 @@ public class ControladorXML {
 
         return graphml;
     }
+    
+    public Graphml textToGraph(String text) throws IOException{
+        Graphml graphml = (Graphml) xstream.fromXML(text);
+        return graphml;
+    }
 
     public String mostraGrafo(Graphml graphml) {
         return xstream.toXML(graphml);
@@ -94,6 +100,5 @@ public class ControladorXML {
     public String mostraGrafo(Graph graph) {
         return xstream.toXML(graph);
     }
-
 
 }

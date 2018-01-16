@@ -3,7 +3,7 @@ package modelos;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.util.ArrayList;
 
-public class Graph {
+public class Graph implements Cloneable {
 
     private String id;
     private String edgedefault;
@@ -11,6 +11,38 @@ public class Graph {
     @XStreamAsAttribute
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
+
+    //Esse construtor é para clonar
+    public Graph(Graph original) {
+        if (null == original) {
+            throw new IllegalArgumentException("Argumento não pode ser nulo para clonagem");
+        }
+        this.id = original.getId();
+        this.edgedefault = original.getEdgedefault();
+
+        if (!original.getNodes().isEmpty()) {
+            ArrayList<Node> nodesCopy = new ArrayList<>();
+            for (int i = 0; i < original.getNodes().size(); i++) {
+                Node no = new Node(original.getNodes().get(i));
+                nodesCopy.add(no);
+            }
+            this.nodes = nodesCopy;
+
+        } else {
+            this.nodes = new ArrayList<>();
+        }
+
+        if (!original.getEdges().isEmpty()) {
+            ArrayList<Edge> edgesCopy = new ArrayList<>();
+            for (int i = 0; i < original.getEdges().size(); i++) {
+                Edge edge = new Edge(original.getEdges().get(i));
+                edgesCopy.add(edge);
+            }
+            this.edges = edgesCopy;
+        } else {
+            this.edges = new ArrayList<>();
+        }
+    }
 
     public Graph() {
         this.nodes = new ArrayList();
@@ -124,7 +156,9 @@ public class Graph {
         int i;
 
         for (i = 0; i < this.edges.size(); i++) {
-            if (this.edges.get(i).getTarget() == no) {
+            String target = this.edges.get(i).getTarget().getId();
+            String noId = no.getId();
+            if (target.equals(noId)) {
                 cont++;
             }
         }
@@ -166,10 +200,7 @@ public class Graph {
     }
 
     public boolean isFonte(Node no) {
-        if (getGrauRecepcao(no) == 0) {
-            return true;
-        }
-        return false;
+        return getGrauRecepcao(no) == 0;
     }
 
     public boolean isSumidouro(Node no) {
@@ -314,7 +345,7 @@ public class Graph {
         return lista;
     }
 
-    private ArrayList<Edge> getArestas(Node origem) {
+    public ArrayList<Edge> getArestas(Node origem) {
         ArrayList<Edge> arestas = new ArrayList<>();
         int i;
         for (i = 0; i < this.getEdges().size(); i++) {
@@ -329,7 +360,6 @@ public class Graph {
             }
 
         }
-
         return arestas;
     }
 
@@ -592,32 +622,33 @@ public class Graph {
 
         return -1;
     }
-    
-    public int getIndiceEdge(Edge edge){
+
+    public int getIndiceEdge(Edge edge) {
         int i;
-        for(i = 0; i < this.edges.size(); i++){
-            if(edge.getId().equals(this.edges.get(i).getId())){
+        for (i = 0; i < this.edges.size(); i++) {
+            if (edge.getId().equals(this.edges.get(i).getId())) {
                 return i;
             }
         }
-        
+
         return -1;
     }
-    
-    public int getIndiceEdgePorId(String edge){
+
+    public int getIndiceEdgePorId(String edge) {
         int i;
-        for(i = 0; i < this.edges.size(); i++){
-            if(edge.equals(this.edges.get(i).getId())){
+        for (i = 0; i < this.edges.size(); i++) {
+            if (edge.equals(this.edges.get(i).getId())) {
                 return i;
             }
         }
-        
+
         return -1;
     }
-    public int getIndiceNodePorId(String node){
+
+    public int getIndiceNodePorId(String node) {
         int i;
-        for(i = 0; i < this.nodes.size(); i++){
-            if(node.equals(this.nodes.get(i).getId())){
+        for (i = 0; i < this.nodes.size(); i++) {
+            if (node.equals(this.nodes.get(i).getId())) {
                 return i;
             }
         }
